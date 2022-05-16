@@ -37,6 +37,11 @@ const companiesController = {
 
     try {
       const company = await Company.findByPk(id)
+
+      if (company === null) {
+        return res.status(404).json({ message: 'Company not found' })
+      }
+
       return res.json(company)
     } catch (err) {
         if (err instanceof Error) {
@@ -60,6 +65,10 @@ const companiesController = {
         returning: true
       })
 
+      if (companies.length <= 0 ) {
+        return res.status(404).json({ message: 'Company not found' })
+      }
+
       return res.json(companies[0])
     } catch (err) {
       if (err instanceof Error) {
@@ -72,9 +81,13 @@ const companiesController = {
     const { id } = req.params
 
     try {
-      await Company.destroy({
+      const companyDeleted = await Company.destroy({
         where: { id: id }
       })
+
+      if (companyDeleted === 0) {
+        return res.status(404).json({ message: 'Company not found' })
+      }
 
       return res.status(204).send()
     } catch (err) {

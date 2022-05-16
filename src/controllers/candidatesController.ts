@@ -42,7 +42,7 @@ const candidatesController = {
       const candidate = await Candidate.findByPk(id)
 
       if (candidate === null) { 
-        return res.status(404).json({ message: 'Candidato não encontrado' })
+        return res.status(404).json({ message: 'Candidate not found' })
       }
 
       return res.json(candidate)
@@ -61,7 +61,7 @@ const candidatesController = {
       const candidate = await Candidate.findByPk(id)
 
       if (candidate === null) {
-        return res.status(404).json({ message: 'Candidato não encontrado' })
+        return res.status(404).json({ message: 'Candidate not found' })
       }
 
       candidate.name = name
@@ -90,7 +90,7 @@ const candidatesController = {
         })
 
       if (userDeleted === 0) {
-        return res.status(404).json({ message: 'Candidato não encontrado' })
+        return res.status(404).json({ message: 'Candidate not found' })
       }
 
         return res.status(204).send()

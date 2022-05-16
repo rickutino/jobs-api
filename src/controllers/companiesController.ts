@@ -31,6 +31,19 @@ const companiesController = {
       }
     }
   },
+
+  show: async (req: Request, res: Response) => {
+    const { id } = req.params
+
+    try {
+      const company = await Company.findByPk(id)
+      return res.json(company)
+    } catch (err) {
+        if (err instanceof Error) {
+          return res.status(400).json({ message: err.message })
+        }
+    }
+},
 }
 
 export { companiesController }

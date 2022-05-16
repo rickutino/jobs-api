@@ -26,7 +26,6 @@ const candidatesController = {
         phone,
         openToWork
       })
-      console.log(candidate)
 
       return res.status(201).json(candidate)
     } catch (err) {

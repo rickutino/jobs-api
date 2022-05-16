@@ -67,6 +67,22 @@ const companiesController = {
       }
     }
   },
+
+  delete: async (req: Request, res: Response) => {
+    const { id } = req.params
+
+    try {
+      await Company.destroy({
+        where: { id: id }
+      })
+
+      return res.status(204).send()
+    } catch (err) {
+      if (err instanceof Error) {
+        return res.status(400).json({ message: err.message })
+      }
+    }
+  }
 }
 
 export { companiesController }

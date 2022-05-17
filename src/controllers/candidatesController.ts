@@ -15,7 +15,6 @@ const candidatesController = {
 
   save: async (req: Request, res: Response) => {
     const { name, bio, email, phone, openToWork } = req.body
-    console.log(name, bio, email, phone, openToWork)
 
 
     try {

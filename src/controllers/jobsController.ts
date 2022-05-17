@@ -44,7 +44,7 @@ const jobsController = {
       const company = await Company.findByPk(id, { include: 'jobs' })
 
       if (company === null) { 
-        return res.status(404).json({ message: 'Company not found' })
+        return res.status(404).json({ message: 'CompanyId not found' })
       }
 
       return res.json(company)
@@ -53,7 +53,34 @@ const jobsController = {
         return res.status(400).json({ message: err.message })
       }
     }
-},
+  },
+
+  update: async (req: Request, res: Response) => {
+    const { id } = req.params
+    const { title, description, limitDate, companyId } = req.body
+
+    try {
+      const [affectedRows, jobs] = await Job.update({
+        title,
+        description,
+        limitDate,
+        companyId,
+      }, {
+        where: { id },
+        returning: true
+      })
+
+      if (jobs.length <= 0 ) {
+        return res.status(404).json({ message: 'Job not found' })
+      }
+
+      return res.json(jobs[0])
+    } catch (err) {
+      if (err instanceof Error) {
+        return res.status(400).json({ message: err.message })
+      }
+    }
+  },
 }
 
 export { jobsController }

@@ -81,6 +81,26 @@ const jobsController = {
       }
     }
   },
+
+  delete: async (req: Request, res: Response) => {
+    const { id } = req.params
+
+    try {
+      const jobDeleted = await Job.destroy({
+        where: { id: id }
+      })
+
+    if (!jobDeleted) {
+      return res.status(404).json({ message: "Can't delete of Job, it id not found." })
+    }
+
+      return res.status(204).send()
+    } catch (err) {
+      if (err instanceof Error) {
+        return res.status(400).json({ message: err.message })
+      }
+    }
+  },
 }
 
 export { jobsController }

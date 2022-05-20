@@ -38,7 +38,7 @@ const candidatesController = {
     const { id } = req.params
 
     try {
-      const candidate = await Candidate.findByPk(id)
+      const candidate = await Candidate.findByPk(id, { include: 'jobs' })
 
       if (candidate === null) { 
         return res.status(404).json({ message: 'Candidate not found' })

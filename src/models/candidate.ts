@@ -1,40 +1,46 @@
-import { DataTypes, Model } from 'sequelize'
-import { sequelize } from '../database'
+import { DataTypes, Model, Optional, Sequelize } from 'sequelize'
 
-export interface CandidateInstance extends Model {
-    id: number
-    name: string
-    bio: string
-    email: string
-    phone: string
-    openToWork: boolean
+export interface Candidate {
+  id: number
+  name: string
+  bio?: string
+  email: string
+  phone?: string
+  openToWork: boolean
 }
 
-const Candidate = sequelize.define<CandidateInstance>(
-  'candidates',
-  {
+export interface CandidateCreationAttribute extends Optional<Candidate, 'id' | 'bio' | 'phone'> {}
+
+export interface CandidateInstance extends Model<Candidate, CandidateCreationAttribute>, Candidate {}
+
+export default (sequelize: Sequelize) => {
+  const Candidate = sequelize.define<CandidateInstance, Candidate>(
+    'candidates',
+    {
       id: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-          autoIncrement: true,
-          primaryKey: true
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true
       },
       name: {
-          type: DataTypes.STRING,
-          allowNull: false
+        type: DataTypes.STRING,
+        allowNull: false
       },
       email: {
-          type: DataTypes.STRING,
-          allowNull: false,
-          unique: true
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
       },
       bio: DataTypes.TEXT,
       phone: DataTypes.STRING,
       openToWork: {
-          type: DataTypes.BOOLEAN,
-          defaultValue: true
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
       }
-  }
-)
+    }
+  )
 
-export { Candidate }
+  return Candidate
+}
+

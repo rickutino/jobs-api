@@ -8,7 +8,7 @@ export interface Company {
   email?: string
 }
 
-interface CompanyCreationAttributes extends Optional<Company, 'id' | 'bio' | 'website' | 'email'> {}
+export interface CompanyCreationAttributes extends Optional<Company, 'id' | 'bio' | 'website' | 'email'> {}
 
 interface CompanyInstance extends Model<Company, CompanyCreationAttributes>, Company {}
 

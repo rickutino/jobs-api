@@ -112,6 +112,10 @@ const jobsController = {
       const job = await Job.findByPk(jobId)
       
       if (job === null) return res.status(404).json({ message: 'Job vacancy not found' })
+      if (candidateId === undefined) return res.status(400).json({ message: 'Candidate is mandatory' })
+
+      const candidateAlreadyAdded = await job.hasCandidate(candidateId);
+      if (candidateAlreadyAdded) return res.status(400).json({ message: 'Candidate already added' })
 
       await job.addCandidate(candidateId)
 
@@ -131,6 +135,7 @@ const jobsController = {
         const job = await Job.findByPk(jobId)
 
         if (job === null) return res.status(404).json({ message: 'Job vacancy not found' })
+        if (candidateId === undefined) return res.status(404).json({ message: 'Job vacancy not found' })
 
         await job.removeCandidate(candidateId)
 

@@ -91,7 +91,6 @@ describe('Candidates endpoint', () => {
       name: 'Test TT',
       email: 'test@email.com'
     });
-    console.log("bio",body);
 
     expect(statusCode).toBe(200);
     expect(body).toHaveProperty('id');
@@ -102,5 +101,15 @@ describe('Candidates endpoint', () => {
     expect(body.openToWork).toBe(candidates[0].openToWork);
     expect(body).toHaveProperty('createdAt');
     expect(body).toHaveProperty('updatedAt');
-  })
+  });
+
+  it('should delete a specific candidate when given a valid candidateId', async () => {
+    const { body, statusCode } = await supertest(app).delete(`/candidates/${candidates[0].id}`);
+
+    const deletedCandidate = await Candidate.findByPk(candidates[0].id);
+
+    expect(statusCode).toBe(204);
+    expect(body).toEqual({});
+    expect(deletedCandidate).toBeNull();
+  });
 })

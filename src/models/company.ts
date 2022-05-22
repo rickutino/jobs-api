@@ -10,7 +10,7 @@ export interface Company {
 
 export interface CompanyCreationAttributes extends Optional<Company, 'id' | 'bio' | 'website' | 'email'> {}
 
-interface CompanyInstance extends Model<Company, CompanyCreationAttributes>, Company {}
+export interface CompanyInstance extends Model<Company, CompanyCreationAttributes>, Company {}
 
 export default (sequelize: Sequelize) => {
   const Company = sequelize.define<CompanyInstance, Company>(

@@ -70,5 +70,19 @@ describe('Candidates endpoint', () => {
 
     expect(statusCode).toBe(400);
     expect(body.message).toBeDefined();
+  });
+
+  it("should return a specific candidate when given a valid candidateId", async () => {
+    const { body, statusCode } = await supertest(app).get(`/candidates/${candidates[0].id}/`);
+
+    expect(statusCode).toBe(200);
+    expect(body).toHaveProperty('id');
+    expect(body.name).toBe(candidates[0].name);
+    expect(body.bio).toBe(candidates[0].bio);
+    expect(body.email).toBe(candidates[0].email);
+    expect(body.phone).toBe(candidates[0].phone);
+    expect(body.openToWork).toBe(candidates[0].openToWork);
+    expect(body).toHaveProperty('createdAt');
+    expect(body).toHaveProperty('updatedAt');
   })
 })

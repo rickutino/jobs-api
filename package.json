@@ -6,8 +6,10 @@
   "scripts": {
     "create-test-db": "NODE_ENV=test sequelize-cli db:create",
     "drop-test-db": "NODE_ENV=test sequelize-cli db:drop",
-    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/app.ts",
-    "test": "jest"
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
+    "test:unit": "jest src",
+    "test:integration": "jest test",
+    "test": "jest --coverage --watch"
   },
   "keywords": [],
   "author": "",
